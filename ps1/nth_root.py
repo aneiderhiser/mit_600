@@ -3,10 +3,10 @@
 def nth_root(epsilon, n, x):
     
     low = 0
-    high = x
+    high = max(x,1)
     g = (high - low) / n
     
-    while abs(g**n - x) > epsilon and g < x:
+    while abs(g**n - x) > epsilon:
         if g**n > x:
             high = g
         else:
