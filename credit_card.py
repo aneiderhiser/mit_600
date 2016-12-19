@@ -49,9 +49,10 @@ def payoff_oneyear(balance, r):
 def bisection(balance, r):
     low = balance/12
     high = (balance*(1 + r/12)**12)/12
-    tolerance = .2
+    tolerance = .1
+    new_balance = balance
     
-    while abs(balance) > tolerance:
+    while abs(new_balance) > tolerance:
         guess = (high + low)/2
         new_balance = balance
         
@@ -64,8 +65,8 @@ def bisection(balance, r):
             high = guess
     
     print('RESULT')    
-    print('Monthly payment to pay off debt in 1 year: ', "%.0f" % guess)
-    #print('Number of months needed: ', "%.0f" % num_payments)
+    print('Monthly payment to pay off debt in 1 year: ', "%.2f" % guess)
+    print('Number of months needed: 12')
     print('Balance: ', "%.2f" % new_balance) 
     
 def main(): 
