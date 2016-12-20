@@ -37,6 +37,12 @@ def compute_deriv(poly):
     poly: tuple of numbers, length > 0
     returns: tuple of numbers
     """
+    deriv_poly = ()
+    for i in range(1,len(poly)):
+        deriv_poly = deriv_poly + (poly[i]*i,)
+        
+    
+    return deriv_poly
      
 
 def compute_root(poly, x_0, epsilon):
@@ -59,10 +65,16 @@ def compute_root(poly, x_0, epsilon):
     epsilon: float > 0
     returns: tuple (float, int)
     """
-    # TO DO ... 
-
-def main():
+    x = x_0
+    iterations = 1
+    while abs(evaluate_poly(poly, x)) > epsilon:
+        f_0 = evaluate_poly(poly, x)
+        f_0_deriv = evaluate_poly(compute_deriv(poly), x)
+        x = x - f_0 / f_0_deriv
+        iterations += 1
+        
+    return (x, iterations)
     
-if __name__ == '__main__':
-    main()
+    
+
 
