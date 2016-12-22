@@ -44,37 +44,72 @@ def choose_word(wordlist):
 # actually load the dictionary of words and point to it with 
 # the wordlist variable so that it can be accessed from anywhere
 # in the program
+def insert_spaces(string):
+    new_string = ''    
+    for e in string:
+        new_string = new_string + e + ' '
+    return new_string[:-1]
 
 
 # your code begins here!
 def hangman(word):
-    
+    print("--------------------------")
+    print("--------------------------")
     print("Welcome to the game, Hangman! I am thinking of a word that is", len(word) ,"letters long.")
+    print("--------------------------")
     print("--------------------------")
     
     guesses = 8
-    available_letters = 'abcdefghijklmnopqrstuvwxyz' 
+    word_list = []
+    for e in word:
+        word_list.append(e)
+        word_list.append(' ')
+    word_list = word_list[:-1]
     
-    word_letters = []
-    for b in word:
-        word_letters.append(b)
-    
-    while guesses > 0 and len(word_letters) > 0:
-        print("You have", guesses, "left.")  
-        print(available_letters)
-        guess = input("Please guess a letter: ")
+    guess = insert_spaces('_'*len(word))
+    guess_list = list(guess)
+    alpha = 'abcdefghijklmnopqrstuvwxyz' 
         
-        if guess not in word_letters:
-            available_letters = available_letters.replace(guess,'')
+    while guesses > 0 and guess_list != word_list:
+        print("\n")        
+        print("You have", guesses, "guesses left.")
+        print("Current guess: ", ''.join(guess_list))
+        print("Available letters: ", alpha)
+        letter = input("Please guess a letter: ")
+        
+        if letter in word:
+            index = []
+            i = 0
+            for e in word_list:
+                if letter == e:
+                    index.append(i)
+                i += 1
+                
+            for k in index:
+                guess_list[k] = letter
+
+            print("Good guess!!")            
+            alpha = alpha.replace(letter,'')
+
+        else:          
+            print("Oops! That letter is not in my word!!")            
+            alpha = alpha.replace(letter,'')
             guesses -= 1
-        else:
-            letters.remove(guess)
             
-   
+    if guesses > 0 and guess_list == word_list:
+        print("Congratulations, you won!")
+        print(word)
+    else:
+        print("YOU LOSE!!!!")
+        print(word)
     
 def main():
-    wordlist = load_words()
-    word = choose_word(wordlist)
+    print("\n")
+    word = choose_word(load_words())
+    print("\n")   
+    hangman(word)
 
 if __name__ == '__main__':
     main()
+    
+    
